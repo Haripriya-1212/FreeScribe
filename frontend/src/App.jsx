@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+// import reactLogo from './assets/react.svg'
+// import viteLogo from '/vite.svg'
 import './App.css'
 import HomePage from './components/HomePage'
 import Header from './components/Header'
@@ -8,7 +8,8 @@ import FileDisplay from './components/FileDisplay'
 import Infromation from './components/Infromation'
 import Transcribing from './components/Transcribing'
 import { MessageTypes } from './utils/presets'
-import TestProxy from './components/TestProxy'
+// import TestProxy from './components/TestProxy'
+import axios from 'axios';
 
 function App() {
   const [file, setFile] = useState(null);
@@ -16,8 +17,6 @@ function App() {
   const [output, setOutput] = useState(null);
   const [loading, setLoading] = useState(false);
   const [finished, setFinished] = useState(false);
-
-  const [downloading, setDownloading] = useState(false);
 
   
   const isAudioAvailable = file || audioStream;
@@ -27,41 +26,9 @@ function App() {
     setAudioStream(null);
   }
 
-  const worker = useRef(null);
-
-  useEffect(() =>{
-    if(!worker.current){
-      worker.current = new Worker(new URL('./utils/whisper.worker.js', import.meta.url),{type:'module'})
-    }
-
-    const onMessageReceived = async (e) => {
-      switch(e.data.type){
-        case 'DOWNLOADING':
-          setDownloading(true)
-          console.log('DOWNLOADING')
-          break;
-        case 'LOADING':
-          setLoading(true)
-          console.log('LOADING')
-          break;
-        case 'RESULT':
-          setOutput(e.data.results)
-          console.log('RESULT')
-          break;
-        case 'INFERENCE_DONE':
-          setFinished(true)
-          console.log('FINISHED')
-          break;
-      }
-    }
-
-    worker.current.addEventListener('message', onMessageReceived)
-    // cleanup 
-    return () => worker.current.removeEventListener('message', onMessageReceived)
-  }, [])
-
 
   async function readAudioFrom(file){
+    console.log("reading file")
     const sampling_rate = 16000
     const audioCTX = new AudioContext({sampleRate: sampling_rate})
     const response = await file.arrayBuffer()
@@ -74,14 +41,28 @@ function App() {
     if(!file && !audioStream){ return }
 
     let audio = await readAudioFrom(file ? file : audioStream)
-    const model_name = "openai/whisper-tiny.en"
 
-    worker.current.postMessage({
-      type: MessageTypes.INFERENCE_REQUEST,
-      audio,
-      model_name
-    })
+    const formData = new FormData();
+    formData.append('audio', audio);
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post('http://localhost:3000/transcribe', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      setOutput(response.data.transcription);
+      setLoading(false);
+      setFinished(true);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
   }
+
+
   
   return (
     <div className='flex flex-col max-w-[1000px] mx-auto w-full'>
