@@ -3,15 +3,15 @@ import { MessageTypes } from './presets';
 
 class MyTranscriptionPipeline {
   static task = 'automatic-speech-recognition';
-  static model = 'Xenova/whisper-tiny.en';
-//   static model = 'openai/whisper-tiny.en';
+//   static model = 'Xenova/whisper-tiny.en';
+  static model = 'openai/whisper-tiny.en';
 //   static model = null;
   static instance = null;
 
   static async getInstance(progress_callback = null) {
     if (this.instance === null) {
-    //   this.instance = await pipeline(this.task, `/api/${this.model}`, {
-      this.instance = await pipeline(this.task, this.model, {
+      this.instance = await pipeline(this.task, `/api/${this.model}`, {
+    //   this.instance = await pipeline(this.task, this.model, {
         progress_callback,
         quantized: true,
         revision: this.model.includes("/whisper-medium") ? "no_attentions" : "main",
