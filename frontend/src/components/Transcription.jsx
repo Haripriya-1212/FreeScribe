@@ -1,11 +1,11 @@
 import React from 'react'
 
-export default function Transcription(props) {
-    const { output } = props;
-    console.log(output);
-    const final_text = output.map(val => val.text)
+export default function Transcription({ output }) {
+    // const { data } = props;
+    // console.log("transcription o/p: ",data);
+    console.log({ output })
 
   return (
-    <div>{final_text}</div>
+    <div>{ output }</div>
   )
 }

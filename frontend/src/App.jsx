@@ -39,15 +39,15 @@ function App() {
 
   async function handleFormSubmission(){
     if(!file && !audioStream){ return }
-
-    let audio = await readAudioFrom(file ? file : audioStream)
+    let audioBuffer = await readAudioFrom(file ? file : audioStream);
 
     const formData = new FormData();
-    formData.append('audio', audio);
+    formData.append('audio', audioStream, 'audio');
 
     setLoading(true);
 
     try {
+    
       const response = await axios.post('http://localhost:3000/transcribe', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -55,10 +55,14 @@ function App() {
       });
 
       setOutput(response.data.transcription);
+      console.log("Received transcription output")
+      console.log("response:",response)
+      console.log("data:",response.data.transcription)
+      // console.log("output:",output)
       setLoading(false);
       setFinished(true);
     } catch (error) {
-      console.error('Error uploading file:', error);
+        console.error('Error uploading file:', error);
     }
   }
 
@@ -70,7 +74,7 @@ function App() {
         <Header/>
         {/* <TestProxy/> */}
 
-        {output ? (<Infromation output/>) : 
+        {output ? (<Infromation output={output}/>) : 
         loading ? <Transcribing/> : 
         
         isAudioAvailable ? (
