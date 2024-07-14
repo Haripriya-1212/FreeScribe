@@ -71,23 +71,23 @@ export default function HomePage(props) {
   return (
     <main className='flex-1 flex flex-col gap-3 sm:gap-4 md:gap-5 justify-center p-4 text-center pb-40'>
         {/* FREESCRIBE */}
-        <h1 className='font-semibold text-5xl sm:text-6xl md:text-7xl'>Free<span className='text-blue-400 bold'>Scribe</span></h1>
+        <h1 className='font-semibold text-5xl sm:text-6xl md:text-7xl'>Free<span className='text-blue-600 bold'>Scribe</span></h1>
         {/* RECORD -> TRANSCRIBE -> TRANSLATE */}
         <h3 className='font-medium md:text-lg'>Record <span className='text-blue-400'>&rarr; </span>Transcribe <span className='text-blue-400'>&rarr; </span>Translate</h3>
         {/* START RECORDING */}
-        <button className='flex items-center text-base justify-between gap-4 mx-auto w-72 w-max-full my-4 specialBtn px-4 py-2 rounded-xl' onClick={recordingStatus === 'recording' ? stopRecording : startRecording}>
-            <p className='text-blue-400'>{recordingStatus === 'inactive' ? 'Record' : 'Stop recording'}</p>
+        <button className='flex items-center text-base justify-between gap-4 mx-auto w-72 w-max-full my-4 specialBtn1 px-4 py-2 rounded-xl' onClick={recordingStatus === 'recording' ? stopRecording : startRecording}>
+            <p className='text-blue-600'>{recordingStatus === 'inactive' ? 'Record' : 'Stop recording'}</p>
             <div className='flex items-center gap-2'>
                 {duration && (
-                    <p className='text-sm'>{duration}s</p>
+                    <p className='text-sm text-black'>{duration}s</p>
                 )}
-                <i className={`fa-solid duration-200 fa-microphone ${recordingStatus === "recording" ? 'text-rose-300' : ""}`}></i>
+                <i className={`fa-solid duration-200 fa-microphone ${recordingStatus === "recording" ? 'text-rose-300' : 'text-black'}`}></i>
                 {/* <i class={"fa-solid duration-200 fa-microphone" + (recordingStatus === "recording" ? 'text-rose-300' : "")}></i> */}
             </div>
         </button>
 
         {/* FILE UPLOAD */}
-        <p className='text-base'>Or <label className='text-blue-400 cursor-pointer hover:text-blue-600 duration-200'>upload <input className='hidden' type='file' accept='.mp3,.wave' onChange={(e) => {
+        <p className='text-base'>Or <label className='text-blue-400 cursor-pointer hover:text-blue-800 duration-200'>upload <input className='hidden' type='file' accept='.mp3,.wave' onChange={(e) => {
             const tempFile = e.target.files[0]
             setFile(tempFile)
         }}/></label>a mp3 file</p>

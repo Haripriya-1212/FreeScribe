@@ -16,7 +16,7 @@ export default function FileDisplay(props) {
         <div className='flex items-center justify-between gap-4'>
             <button className='text-slate-400 hover:text-blue-400 duration-200' onClick={handleAudioReset}>Reset</button>
             <button 
-            className='specialBtn px-4 py-2 rounded-xl text-blue-400 flex items-center gap-2 font-medium'
+            className='specialBtn w-130 px-4 py-2 rounded-xl text-blue-400 flex items-center gap-2 font-medium'
             onClick={handleFormSubmission}
             >
                 <p>Transcribe</p>

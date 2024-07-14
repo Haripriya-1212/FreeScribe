@@ -10,12 +10,19 @@ const { execFile } = require('child_process');
 
 require('dotenv').config();
 
+
+const mongoose = require('mongoose');
+const User = require('./models/User')
+
 const app = express();
 const port = 3000;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+mongoose.connect('mongodb+srv://haripriya01212:<password>@fsd.m0l4kny.mongodb.net/?retryWrites=true&w=majority&appName=fsd').then(() => console.log('Connected to MongoDB'))
+.catch(err => console.error('Could not connect to MongoDB:', err));
 
 // Configure OpenAI
 const openai = new OpenAI({
@@ -127,6 +134,28 @@ app.post('/transcribe-mp3', upload.single('audio'), async (req, res) => {
 });
 
 
+
+//mongodb+srv://haripriya01212:<password>@fsd.m0l4kny.mongodb.net/?retryWrites=true&w=majority&appName=fsd
+
+// endpoint to signup
+app.post('/signup', async(req, res) => {
+  try{
+
+  }
+  catch(err){
+
+  }
+})
+
+
+
+
+// endpoint to login
+
+
+
+
+// endpoint to fetch history
 
 
 
