@@ -21,9 +21,11 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://haripriya01212:<password>@fsd.m0l4kny.mongodb.net/?retryWrites=true&w=majority&appName=fsd').then(() => console.log('Connected to MongoDB'))
+mongoose.connect('mongodb+srv://haripriya01212:<password>/?retryWrites=true&w=majority&appName=fsd').then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('Could not connect to MongoDB:', err));
 
+
+// -------------------------------------------------------------------------------------------------------------------
 // Configure OpenAI
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -133,24 +135,47 @@ app.post('/transcribe-mp3', upload.single('audio'), async (req, res) => {
   }
 });
 
-
+//----------------------------------------------------------------------------------------------------------------------------
 
 //mongodb+srv://haripriya01212:<password>@fsd.m0l4kny.mongodb.net/?retryWrites=true&w=majority&appName=fsd
 
 // endpoint to signup
 app.post('/signup', async(req, res) => {
-  try{
-
-  }
-  catch(err){
-
+  try {
+    const { username, email, password } = req.body;
+    // const userDoc = await User.create({ username, email, password: bcrypt.hashSync(password, salt), selectedTopics });
+    const userDoc = await User.create({ username, email, password });
+    res.json(userDoc);
+  } catch (err) {
+    res.status(500).json({ error: err });
   }
 })
 
 
 
-
 // endpoint to login
+app.post('/login', async(req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Find user with the given username
+    const user = await User.findOne({ email });
+
+    // If user not found or password doesn't match, send error response
+    if (!user || user.password !== password) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
+
+    // If credentials are correct, send success response
+    res.status(200).json({ message: 'Login successful', user });
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while logging in' });
+  }
+})
+
+
+
+// endpoint to add transcriptions
 
 
 
