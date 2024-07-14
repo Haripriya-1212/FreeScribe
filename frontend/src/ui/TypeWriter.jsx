@@ -1,76 +1,50 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, stagger, useAnimate, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 // Function to split text while preserving spaces
 const splitTextWithSpaces = (text) => {
   return text.split('').map(char => char === ' ' ? '\u00A0' : char);
 };
 
-export const TypewriterEffect = ({ text, className, cursorClassName }) => {
-  // Split text into array of characters, preserving spaces
-  const textArray = splitTextWithSpaces(text);
-
-  const [scope, animate] = useAnimate();
-  const isInView = useInView(scope);
-  const [cursorPosition, setCursorPosition] = useState(0);
+export const TypewriterEffect = ({ text, className }) => {
   const textRef = useRef(null);
-  const cursorRef = useRef(null);
 
+  // Animation effect to simulate typing
   useEffect(() => {
-    if (textRef.current) {
-      const textWidth = textRef.current.offsetWidth;
-      setCursorPosition(textWidth);
-    }
-  }, [text]);
+    let index = 0;
+    const typingInterval = 100; // Adjust typing speed here
 
-  useEffect(() => {
-    if (isInView) {
-      animate(
-        'span',
-        {
-          display: 'inline-block',
-          opacity: 1,
-          width: 'fit-content',
-        },
-        {
-          duration: 0.3,
-          delay: stagger(0.1),
-          ease: 'easeInOut',
-        }
-      );
-    }
-  }, [isInView]);
-
-  // Update cursor position on each frame
-  useEffect(() => {
-    const updateCursorPosition = () => {
-      if (cursorRef.current && textRef.current) {
-        const textWidth = textRef.current.offsetWidth;
-        const cursorWidth = cursorRef.current.offsetWidth;
-        const cursorOffset = textWidth - cursorWidth;
-        setCursorPosition(cursorOffset);
+    const type = () => {
+      if (index <= text.length) {
+        setTimeout(() => {
+          if (textRef.current) {
+            const spanElements = textRef.current.children;
+            for (let i = 0; i < index; i++) {
+              if (spanElements[i]) {
+                spanElements[i].style.opacity = '1';
+              }
+            }
+            index++;
+            type(); // Continue typing
+          }
+        }, typingInterval); // Maintain typing speed
       }
     };
 
-    updateCursorPosition();
-    window.addEventListener('resize', updateCursorPosition);
-
-    return () => {
-      window.removeEventListener('resize', updateCursorPosition);
-    };
+    type();
   }, [text]);
 
   return (
     <div className={`relative ${className}`}>
       <p
-        className="text-base sm:text-xl md:text-3xl lg:text-5xl font-bold text-center inline-block"
+        className="text-base sm:text-xl md:text-3xl lg:text-5xl font-bold text-center inline-block whitespace-nowrap overflow-hidden"
         ref={textRef}
       >
-        {textArray.map((char, index) => (
+        {splitTextWithSpaces(text).map((char, index) => (
           <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }} // Sync delay with typing speed
             key={index}
             className="dark:text-white text-black inline-block"
           >
@@ -78,18 +52,6 @@ export const TypewriterEffect = ({ text, className, cursorClassName }) => {
           </motion.span>
         ))}
       </p>
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, repeat: Infinity, repeatType: 'reverse' }}
-        className={`absolute bottom-0 rounded-sm w-[4px] h-4 md:h-6 lg:h-10 bg-blue-600 ${cursorClassName}`}
-        style={{ 
-          left: cursorPosition, 
-          transform: 'translateX(0)', 
-          transition: 'left 0.1s ease-in-out'
-        }}
-        ref={cursorRef}
-      ></motion.span>
     </div>
   );
 };

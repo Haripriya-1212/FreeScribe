@@ -37,22 +37,23 @@ export default function Infromation(props) {
       <section className='min-h-screen flex flex-col'>
 
     <main className='flex-1 flex flex-col gap-3 sm:gap-4 justify-center p-4 text-center pb-20 w-72 max-w-prose w-full mx-auto'>
-        <h1 className='font-semibold text-4xl sm:text-5xl md:text-6xl items-center whitespace-nowrap pb-6'>Your <span className='text-blue-400 bold'>Transcrpition</span></h1>
+        <h1 className='font-semibold text-4xl sm:text-5xl md:text-6xl items-center whitespace-nowrap pb-6'>Your <span className='text-blue-600 bold'>Transcrpition</span></h1>
 
         <div className='grid-cols-2 items-center mx-auto bg-white border-1 border-solid border-blue-3 00 shadow rounded-full overflow-hidden'>
             <button 
             className={'px-5 py-2 font-medium duration-200' + (tab === 'transcription' ? ' bg-blue-400 text-white' : ' text-blue-400 hover:text-blue-600')}
             onClick={() => setTab('transcription')}
             >Transcrpition</button>            
-            <button 
+            {/* <button 
             className={'px-5 py-2 font-medium duration-200' + (tab === 'translation' ? ' bg-blue-400 text-white' : ' text-blue-400 hover:text-blue-600')}
             onClick={() => setTab('translation')}
-            >Translation</button>            
+            >Translation</button>             */}
         </div>
         
         <div className='my-8 flex flex-col'>
 
-        {tab === 'transcription' ? <Transcription output={output}/> : <Translation output={output}/>}
+        {/* {tab === 'transcription' ? <Transcription output={output}/> : <Translation output={output}/>} */}
+        <Transcription output={output}/>
         </div>
 
         <div className='flex items-center gap-4 mx-auto'>

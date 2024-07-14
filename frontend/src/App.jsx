@@ -12,6 +12,7 @@ import SignUpPage from './components/SignUpPage';
 import { UserContextProvider } from './UserContext';
 import HistoryPage from './components/HistoryPage';
 import Infromation from './components/Infromation';
+import { TryPage } from './components/TryPage';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
             <Route path='/user' element={<LoggedInPage/>}></Route>
             <Route path='/history' element={<HistoryPage/>}></Route>
             <Route path='/info' element={<Infromation/>}></Route>
+            <Route path='/try' element={<TryPage/>}></Route>
           </Route>
         </Routes>
       

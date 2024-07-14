@@ -73,7 +73,7 @@ export default function HomePage(props) {
         {/* FREESCRIBE */}
         <h1 className='font-semibold text-5xl sm:text-6xl md:text-7xl'>Free<span className='text-blue-600 bold'>Scribe</span></h1>
         {/* RECORD -> TRANSCRIBE -> TRANSLATE */}
-        <h3 className='font-medium md:text-lg'>Record <span className='text-blue-400'>&rarr; </span>Transcribe <span className='text-blue-400'>&rarr; </span>Translate</h3>
+        <h3 className='font-medium md:text-lg'>Record <span className='text-blue-400'>&rarr; </span>Transcribe</h3>
         {/* START RECORDING */}
         <button className='flex items-center text-base justify-between gap-4 mx-auto w-72 w-max-full my-4 specialBtn1 px-4 py-2 rounded-xl' onClick={recordingStatus === 'recording' ? stopRecording : startRecording}>
             <p className='text-blue-600'>{recordingStatus === 'inactive' ? 'Record' : 'Stop recording'}</p>

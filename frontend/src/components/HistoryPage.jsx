@@ -1,6 +1,8 @@
 import React from 'react'
 import { UserContext } from '../UserContext';
 import { useContext, useState, useEffect } from 'react';
+import HistoryElement from './HistoryElement';
+import { formatISO9075 } from 'date-fns'
 
 export default function HistoryPage() {
   const {userInfo} = useContext(UserContext);
@@ -31,13 +33,13 @@ export default function HistoryPage() {
 
   return (
     <div className='mt-20'>
-      <h1>History</h1>
+      <h1 className='font-semibold text-3xl sm:text-4xl md:text-5xl mb-10'>History</h1>
       <ul>
         {transcripts.length > 0 ? (
           transcripts.map((transcript) => (
             <li key={transcript._id}>
-              <p>Transcript: {transcript.transcript}</p>
-              <p>Time: {new Date(transcript.time).toLocaleString()}</p>
+              
+              <HistoryElement transcript={ transcript.transcript} time={new Date(transcript.createdAt).toLocaleString()}/>
             </li>
           ))
         ) : (

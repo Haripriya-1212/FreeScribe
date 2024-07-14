@@ -6,7 +6,7 @@ export default function FileDisplay(props) {
   return (
     <main className='flex-1 flex flex-col gap-3 sm:gap-4 justify-center p-4 text-center pb-20 w-72 max-w-full mx-auto'>
       {/* YOURFILE */}
-        <h1 className='font-semibold text-4xl sm:text-5xl md:text-6xl'>Your<span className='text-blue-400 bold'>File</span></h1>
+        <h1 className='font-semibold text-4xl sm:text-5xl md:text-6xl'>Your<span className='text-blue-600 bold'>File</span></h1>
         {/* NAME OF FILE */}
         <div className='flex flex-col text-left my-4'>
             <h3 className='font-semibold'>Name</h3>
