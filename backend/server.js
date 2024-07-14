@@ -86,6 +86,52 @@ app.post('/transcribe', upload.single('audio'), async (req, res) => {
 });
 
 
+// Endpoint to handle MP3 file uploads and transcriptions
+app.post('/transcribe-mp3', upload.single('audio'), async (req, res) => {
+  try {
+    const audioBuffer = req.file.buffer;
+    const filename = req.file.originalname;
+    const mp3FilePath = path.join(__dirname, 'uploads', filename);
+
+    // Create the uploads directory if it doesn't exist
+    if (!fs.existsSync(path.join(__dirname, 'uploads'))) {
+      fs.mkdirSync(path.join(__dirname, 'uploads'));
+    }
+
+    // Save the buffer as an MP3 file
+    fs.writeFileSync(mp3FilePath, audioBuffer);
+
+    try {
+      // Transcribe the MP3 file using OpenAI API
+      const response = await openai.audio.transcriptions.create({
+        model: 'whisper-1',
+        file: fs.createReadStream(mp3FilePath),
+        filename: filename,
+      });
+
+      console.log(response.text) // Log transcription response
+      res.json({ transcription: response.text });
+
+      // Delete the temporary file
+      fs.unlinkSync(mp3FilePath);
+      console.log('Deleted temporary file'); // Log file deletion
+
+    } catch (error) {
+      console.error('Error during transcription:', error.message);
+      res.status(500).json({ error: error.message });
+    }
+  } catch (error) {
+    console.error('Error handling request:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
+
+
+
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

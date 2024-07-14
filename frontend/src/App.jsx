@@ -42,28 +42,56 @@ function App() {
     let audioBuffer = await readAudioFrom(file ? file : audioStream);
 
     const formData = new FormData();
-    formData.append('audio', audioStream, 'audio');
 
-    setLoading(true);
+    if(audioStream){
 
-    try {
-    
-      const response = await axios.post('http://localhost:3000/transcribe', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      setOutput(response.data.transcription);
-      console.log("Received transcription output")
-      console.log("response:",response)
-      console.log("data:",response.data.transcription)
-      // console.log("output:",output)
-      setLoading(false);
-      setFinished(true);
-    } catch (error) {
+      formData.append('audio', audioStream, 'audio');
+      
+      setLoading(true);
+      
+      try {
+        
+        const response = await axios.post('http://localhost:3000/transcribe', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        
+        setOutput(response.data.transcription);
+        console.log("Received transcription output")
+        console.log("response:",response)
+        console.log("data:",response.data.transcription)
+        // console.log("output:",output)
+        setLoading(false);
+        setFinished(true);
+      } catch (error) {
         console.error('Error uploading file:', error);
+      }
     }
+
+    else{
+      formData.append('audio', file);
+
+      setLoading(true);
+
+      try {
+        const response = await axios.post('http://localhost:3000/transcribe-mp3', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+
+        setOutput(response.data.transcription);
+        console.log('Transcription:', response.data.transcription);
+        setLoading(false);
+        setFinished(true);
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      }
+    }
+
+
+
   }
 
 
