@@ -8,10 +8,24 @@ export default function Infromation(props) {
 
     function handleCopy(){
         // navigator.clipboard.writeText()
+        const textToCopy = output;
+        console.log("textToCopy", textToCopy);
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            alert('Text copied to clipboard');
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
     }
 
     function handleDownload(){
-
+        const textToDownload = output;
+        const blob = new Blob([textToDownload], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${tab}.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
     }
 
   return (
@@ -35,10 +49,16 @@ export default function Infromation(props) {
         </div>
 
         <div className='flex items-center gap-4 mx-auto'>
-            <button title="Copy" className='bg-white px-2 text-blue-300 hover:text-blue-400 duration-200 rounded aspect-square grid place-items-center'>
+            <button title="Copy" 
+            className='bg-white px-2 text-blue-300 hover:text-blue-400 duration-200 rounded aspect-square grid place-items-center'
+            onClick={handleCopy}
+            >
                 <i className="fa-solid fa-copy"></i>
             </button>
-            <button title="Download" className='bg-white px-2 text-blue-300 hover:text-blue-400 duration-200 rounded aspect-square grid place-items-center'>
+            <button title="Download" 
+            className='bg-white px-2 text-blue-300 hover:text-blue-400 duration-200 rounded aspect-square grid place-items-center'
+            onClick={handleDownload}
+            >
                 <i className="fa-solid fa-download"></i>
             </button>
         </div>
