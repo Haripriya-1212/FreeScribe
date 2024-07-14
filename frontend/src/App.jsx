@@ -11,6 +11,7 @@ import LoginPage from './components/LoginPage';
 import SignUpPage from './components/SignUpPage';
 import { UserContextProvider } from './UserContext';
 import HistoryPage from './components/HistoryPage';
+import Infromation from './components/Infromation';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
             <Route index element={<LandingPage/>}></Route>
             <Route path='/user' element={<LoggedInPage/>}></Route>
             <Route path='/history' element={<HistoryPage/>}></Route>
+            <Route path='/info' element={<Infromation/>}></Route>
           </Route>
         </Routes>
       

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useContext } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 import HomePage from './HomePage'
@@ -8,6 +8,8 @@ import Infromation from './Infromation'
 import Transcribing from './Transcribing'
 // import TestProxy from './components/TestProxy'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../UserContext';
 
 export default function LoggedInPage() {
   const [file, setFile] = useState(null);
@@ -15,6 +17,11 @@ export default function LoggedInPage() {
   const [output, setOutput] = useState(null);
   const [loading, setLoading] = useState(false);
   const [finished, setFinished] = useState(false);
+  const {userInfo} = useContext(UserContext);
+
+  const usr_id = userInfo._id;
+
+  const navigate = useNavigate();
 
   
   const isAudioAvailable = file || audioStream;
@@ -62,6 +69,8 @@ export default function LoggedInPage() {
         // console.log("output:",output)
         setLoading(false);
         setFinished(true);
+        handleStoring(response.data.transcription);
+        navigate('/info', { state: { output: response.data.transcription } });
       } catch (error) {
         console.error('Error uploading file:', error);
       }
@@ -83,13 +92,34 @@ export default function LoggedInPage() {
         console.log('Transcription:', response.data.transcription);
         setLoading(false);
         setFinished(true);
+        handleStoring(response.data.transcription);
+        navigate('/info', { state: { output: response.data.transcription } });
       } catch (error) {
         console.error('Error uploading file:', error);
       }
     }
 
+  }
 
-
+  async function handleStoring(transcript) {
+    try {
+      const response = await fetch('http://localhost:3000/save-transcript', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId: usr_id, transcript })
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const responseData = await response.json();
+      console.log('Transcript saved successfully:', responseData);
+    } catch (error) {
+      console.error('Error saving transcript:', error);
+    }
   }
 
 
@@ -99,7 +129,8 @@ export default function LoggedInPage() {
       <section className='min-h-screen flex flex-col'>
         {/* <TestProxy/> */}
 
-        {output ? (<Infromation output={output}/>) : 
+        {
+        // output ? (<Infromation output={output}/>) : 
         loading ? <Transcribing/> : 
         
         isAudioAvailable ? (

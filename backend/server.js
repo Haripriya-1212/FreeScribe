@@ -13,6 +13,7 @@ require('dotenv').config();
 
 const mongoose = require('mongoose');
 const User = require('./models/User')
+const Transcripts = require('./models/Transcripts')
 
 const app = express();
 const port = 3000;
@@ -174,13 +175,40 @@ app.post('/login', async(req, res) => {
 })
 
 
+// Endpoint to save a transcript
+app.post('/save-transcript', async (req, res) => {
+  const { userId, transcript } = req.body;
 
-// endpoint to add transcriptions
+  if (!userId || !transcript) {
+    return res.status(400).json({ error: 'User ID and transcript text are required' });
+  }
 
+  try {
+    const transcriptData = await Transcripts.create({userId, transcript, createdAt: new Date()});
+
+    res.status(201).json({ message: 'Transcript saved successfully', transcript: transcriptData });
+  } catch (error) {
+    res.status(500).json({ error: 'Error saving transcript', details: error.message });
+  }
+});
 
 
 
 // endpoint to fetch history
+app.get('/transcripts', async (req, res) => {
+  try {
+    const userId = req.query.userId;
+    if (!userId) {
+      return res.status(400).json({ message: 'User ID is required' });
+    }
+
+    const transcripts = await Transcripts.find({ userId: userId });
+    res.status(200).json(transcripts);
+  } catch (error) {
+    console.error('Error fetching transcripts:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 
 

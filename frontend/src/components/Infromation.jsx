@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import Transcription from './Transcription';
 import Translation from './Translation';
+import { useLocation } from 'react-router-dom';
 
 export default function Infromation(props) {
-    const {output } = props;
+    // const {output } = props;
+    const location = useLocation();
+    const { output } = location.state;
     const [tab, setTab] = useState('transcription');
 
     function handleCopy(){
@@ -29,6 +32,10 @@ export default function Infromation(props) {
     }
 
   return (
+    <div className='flex flex-col max-w-[1000px] mx-auto w-full'>
+
+      <section className='min-h-screen flex flex-col'>
+
     <main className='flex-1 flex flex-col gap-3 sm:gap-4 justify-center p-4 text-center pb-20 w-72 max-w-prose w-full mx-auto'>
         <h1 className='font-semibold text-4xl sm:text-5xl md:text-6xl items-center whitespace-nowrap pb-6'>Your <span className='text-blue-400 bold'>Transcrpition</span></h1>
 
@@ -45,7 +52,7 @@ export default function Infromation(props) {
         
         <div className='my-8 flex flex-col'>
 
-        {tab === 'transcription' ? <Transcription {...props}/> : <Translation {...props}/>}
+        {tab === 'transcription' ? <Transcription output={output}/> : <Translation output={output}/>}
         </div>
 
         <div className='flex items-center gap-4 mx-auto'>
@@ -63,5 +70,7 @@ export default function Infromation(props) {
             </button>
         </div>
     </main>
+                </section>
+                </div>
   )
 }
