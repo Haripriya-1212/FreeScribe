@@ -21,7 +21,7 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://haripriya01212:<password>/?retryWrites=true&w=majority&appName=fsd').then(() => console.log('Connected to MongoDB'))
+mongoose.connect('mongodb+srv://haripriya01212:<password>@fsd.m0l4kny.mongodb.net/?retryWrites=true&w=majority&appName=fsd').then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('Could not connect to MongoDB:', err));
 
 

@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react';
+import { UserContext } from '../UserContext';
+import { Navigate } from 'react-router-dom';
 
 export default function SignUpPage() {
   const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [redirect, setRedirect] = useState(false)
+    const {setUserInfo} = useContext(UserContext)
 
     async function handleSubmit(ev){
         ev.preventDefault();
@@ -23,12 +27,19 @@ export default function SignUpPage() {
           if (response.ok) {
             const data = await response.json();
             console.log("SignUp successful:", data);
+            setUserInfo(data);
+            console.log("saved usercontext")
+            setRedirect(true)
           }
         }
         catch(err){
           console.error("Failed to fetch:", err);
         }
         
+    }
+
+    if(redirect){
+      return <Navigate to={'/user'}/>
     }
 
   return (

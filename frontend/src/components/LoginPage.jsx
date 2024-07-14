@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react';
+import { UserContext } from '../UserContext';
+import { Navigate } from 'react-router-dom';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [redirect, setRedirect] = useState(false)
+    const {setUserInfo} = useContext(UserContext)
 
     async function handleSubmit(ev){
         ev.preventDefault();
@@ -18,9 +22,10 @@ export default function LoginPage() {
               );
               if(response.ok){
                 response.json().then(userInfo => {
-                //   setUserInfo(userInfo);
-                //   setRedirect(true);
-                console.log("Login successfull")
+                    // console.log("Login successfull")
+                    setUserInfo(userInfo.user);
+                    console.log("saved in usercontext : ",userInfo)
+                    setRedirect(true);
                 })
               }
               else{
@@ -31,6 +36,10 @@ export default function LoginPage() {
 
         }
         
+    }
+
+    if(redirect){
+        return <Navigate to={'/user'}/>
     }
 
   return (
