@@ -2,7 +2,6 @@ import React from 'react'
 import { UserContext } from '../UserContext';
 import { useContext, useState, useEffect } from 'react';
 import HistoryElement from './HistoryElement';
-import { formatISO9075 } from 'date-fns'
 
 export default function HistoryPage() {
   const {userInfo} = useContext(UserContext);

@@ -32,7 +32,7 @@ export default function Infromation(props) {
     }
 
   return (
-    <div className='flex flex-col max-w-[1000px] mx-auto w-full'>
+    <div className='flex flex-col max-w-[1000px]  w-full'>
 
       <section className='min-h-screen flex flex-col'>
 
@@ -41,7 +41,7 @@ export default function Infromation(props) {
 
         <div className='grid-cols-2 items-center mx-auto bg-white border-1 border-solid border-blue-3 00 shadow rounded-full overflow-hidden'>
             <button 
-            className={'px-5 py-2 font-medium duration-200' + (tab === 'transcription' ? ' bg-blue-400 text-white' : ' text-blue-400 hover:text-blue-600')}
+            className={'px-5 py-2 font-medium duration-200' + (tab === 'transcription' ? ' bg-blue-600 text-white' : ' text-blue-400 hover:text-blue-600')}
             onClick={() => setTab('transcription')}
             >Transcrpition</button>            
             {/* <button 
@@ -58,13 +58,13 @@ export default function Infromation(props) {
 
         <div className='flex items-center gap-4 mx-auto'>
             <button title="Copy" 
-            className='bg-white px-2 text-blue-300 hover:text-blue-400 duration-200 rounded aspect-square grid place-items-center'
+            className='bg-white px-2 text-blue-500 hover:text-blue-400 duration-200 rounded aspect-square grid place-items-center'
             onClick={handleCopy}
             >
                 <i className="fa-solid fa-copy"></i>
             </button>
             <button title="Download" 
-            className='bg-white px-2 text-blue-300 hover:text-blue-400 duration-200 rounded aspect-square grid place-items-center'
+            className='bg-white px-2 text-blue-500 hover:text-blue-400 duration-200 rounded aspect-square grid place-items-center'
             onClick={handleDownload}
             >
                 <i className="fa-solid fa-download"></i>

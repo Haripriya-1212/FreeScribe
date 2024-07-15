@@ -5,14 +5,16 @@
 body{
     color: #dedede;
     background-color: #000000;
-    /* height: 100%;
-    margin: 0; */
+    height: 100%;
+    margin: 0;
   }
 
-  /* #root {
-    min-height: 100%;  /* Ensure root element takes at least 100% of the viewport height */
-    /* min-width: 100%;   /* Ensure root element takes at least 100% of the viewport width */
-    /* background-image: url('./ui/rrt1.jpg'); */
-    /* background-size: cover; */
-    /* background-repeat: no-repeat; */ 
-   /* } */ 
+   #root {
+    height: 100vh;   
+    width: 100%; 
+    margin: 0px auto;  
+    background-image: url('./ui/rrt1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat; 
+    /* background-size:100% 100%; */
+    } 

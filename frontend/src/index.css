@@ -18,16 +18,26 @@ h1, h2, h3{
   transition-duration: 200ms;
 }
 
-.specialBtn{
-  background: rgb(49, 49, 49);
+.specialBtn2{
+  background: rgb(255, 255, 255);
   box-shadow: 0px 14px 55px rgba(88, 88, 88, 0.35);
   transition-duration: 200ms;
   text-align: center;
   /* width: 100px; */
 }
+.specialBtn{
+  background: rgb(49, 49, 49);
+  box-shadow: 0px 10px 35px rgba(0, 0, 0, 0.25);
+  transition-duration: 200ms;
+  text-align: center;
+  width: 100px;
+  height: 40px;
+  /* width: 100px; */
+}
 
 .specialBtn:hover {
   opacity: 0.8;
+  background: rgb(0, 0, 0);
 }
 
 

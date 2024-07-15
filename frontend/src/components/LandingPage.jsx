@@ -12,6 +12,11 @@ export default function LandingPage() {
         <p className='text-blue-600 font-medium'>Unlock the power of effortless transcription! </p>
         <p>Whether you're a busy professional needing accurate meeting notes, a student transcribing lectures, or anyone in need of reliable text conversion, our platform delivers precision and speed. Simply upload your audio file or record, and let our advanced system handle the rest. Enjoy the convenience of high-quality transcripts delivered quickly, with a user-friendly interface designed to make your life easier. Transform your spoken words into actionable text with ease and confidence.</p>
         </div>
+        {/* <button 
+            className='specialBtn2 w-32 px-4 py-2 rounded-xl text-blue-500 flex items-center gap-2 font-medium'
+            >
+                Get Started
+        </button> */}
         <Features/>
     </div>
   )

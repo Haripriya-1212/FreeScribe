@@ -6,62 +6,76 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 import {
-  IconAdjustmentsBolt,
-  IconCloud,
-  IconCurrencyDollar,
-  IconEaseInOut,
+//   IconAdjustmentsBolt,
+//   IconCloud,
+//   IconCurrencyDollar,
+//   IconEaseInOut,
   IconHeart,
-  IconHelp,
-  IconRouteAltLeft,
-  IconTerminal2,
+//   IconHelp,
+//   IconRouteAltLeft,
+//   IconTerminal2,
+//   IconMic,
+  IconMicrophone,
+  IconEaseInOut,
+  IconCurrencyDollar,
+  IconCloud,
+  IconBrain,
+  IconUsers,
+  IconDeviceMobile,
+  IconLock,
+  IconUpload,
+  IconBolt,
+  IconBrandReact,
+  IconDatabase,
 } from '@tabler/icons-react';
 
 export function Features() {
-  const features = [
-    {
-      title: 'Built for developers',
-      description: 'Built for engineers, developers, dreamers, thinkers and doers.',
-      icon: <IconTerminal2 />,
-    },
-    {
-      title: 'Ease of use',
-      description: "It's as easy as using an Apple, and as expensive as buying one.",
-      icon: <IconEaseInOut />,
-    },
-    {
-      title: 'Pricing like no other',
-      description: 'Our prices are best in the market. No cap, no lock, no credit card required.',
-      icon: <IconCurrencyDollar />,
-    },
-    {
-      title: '100% Uptime guarantee',
-      description: 'We just cannot be taken down by anyone.',
-      icon: <IconCloud />,
-    },
-    {
-      title: 'Multi-tenant Architecture',
-      description: 'You can simply share passwords instead of buying new seats',
-      icon: <IconRouteAltLeft />,
-    },
-    {
-      title: '24/7 Customer Support',
-      description: 'We are available a 100% of the time. Atleast our AI Agents are.',
-      icon: <IconHelp />,
-    },
-    {
-      title: 'Money back guarantee',
-      description: 'If you donot like EveryAI, we will convince you to like us.',
-      icon: <IconAdjustmentsBolt />,
-    },
-    {
-      title: 'And everything else',
-      description: 'I just ran out of copy ideas. Accept my sincere apologies',
-      icon: <IconHeart />,
-    },
-  ];
+    const features = [
+        {
+          title: 'Effortless Transcription',
+          description: 'Transform audio into text with unparalleled accuracy and speed.',
+        //   icon: <IconMic />,
+        icon: <IconMicrophone />,
+        },
+        {
+          title: 'User-Friendly Interface',
+          description: 'Intuitive design that makes transcription a breeze for everyone.',
+          icon: <IconEaseInOut />,
+        },
+        {
+            title: 'Record or Upload Audio',
+            description: 'Easily record audio or upload existing files for transcription.',
+            icon: <IconUpload />,
+        },
+        {
+          title: 'Reliable Performance',
+          description: 'Experience seamless transcription with our highly optimized platform.',
+          icon: <IconBolt />,
+        },
+        {
+          title: 'Advanced AI Model',
+          description: 'Powered by OpenAI’s Whisper-Tiny for state-of-the-art transcription capabilities.',
+          icon: <IconBrain />,
+        },
+        {
+            title: 'Built using React',
+            description: 'Crafted using React for a dynamic and responsive user experience.',
+            icon: <IconBrandReact />,
+        },
+        {
+            title: 'Data Stored in MongoDB',
+            description: 'Your transcription data is securely stored and managed in MongoDB.',
+            icon: <IconDatabase />,
+        },
+        {
+          title: 'User Experience',
+          description: 'Crafted with care, offering a smooth and intuitive user experience.',
+          icon: <IconHeart />,
+        },
+      ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 relative z-10 py-10 max-w-7xl mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 relative z-10 py-10 max-w-7xl ">
       {features.map((feature, index) => (
         <Feature key={feature.title} {...feature} index={index} />
       ))}

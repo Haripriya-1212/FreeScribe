@@ -1,7 +1,10 @@
-import React, { useState, useEffect, useRef} from 'react'
+import React, { useContext, useState, useEffect, useRef} from 'react'
+import { UserContext } from '../UserContext';
 
 export default function HomePage(props) {
     const { setFile, setAudioStream } = props
+    const {userInfo} = useContext(UserContext);
+    const usr_name = userInfo.username;
 
     const [recordingStatus, setRecordingStatus] = useState('inactive');
     const [audioChunks, setAudioChunks] = useState([]);
@@ -69,13 +72,14 @@ export default function HomePage(props) {
 
 
   return (
-    <main className='flex-1 flex flex-col gap-3 sm:gap-4 md:gap-5 justify-center p-4 text-center pb-40'>
+    <main className='flex-1 flex flex-col gap-3 sm:gap-4 md:gap-5 justify-center p-4 pb-40'>
         {/* FREESCRIBE */}
-        <h1 className='font-semibold text-5xl sm:text-6xl md:text-7xl'>Free<span className='text-blue-600 bold'>Scribe</span></h1>
+        <h1 className='font-semibold text-4xl sm:text-5xl md:text-6xl'>Hi <span className='text-blue-600 bold'>{usr_name}!</span></h1>
+        <h1 className='font-semibold text-4xl sm:text-5xl md:text-6xl'>Start Transcribing Now!</h1>
         {/* RECORD -> TRANSCRIBE -> TRANSLATE */}
-        <h3 className='font-medium md:text-lg'>Record <span className='text-blue-400'>&rarr; </span>Transcribe</h3>
+        <h3 className='font-medium md:text-lg'>Record / Upload <span className='text-blue-400'>&rarr; </span>Transcribe</h3>
         {/* START RECORDING */}
-        <button className='flex items-center text-base justify-between gap-4 mx-auto w-72 w-max-full my-4 specialBtn1 px-4 py-2 rounded-xl' onClick={recordingStatus === 'recording' ? stopRecording : startRecording}>
+        <button className='flex items-center text-base justify-between gap-4 w-72 w-max-full my-4 specialBtn1 px-4 py-2 rounded-xl' onClick={recordingStatus === 'recording' ? stopRecording : startRecording}>
             <p className='text-blue-600'>{recordingStatus === 'inactive' ? 'Record' : 'Stop recording'}</p>
             <div className='flex items-center gap-2'>
                 {duration && (
@@ -87,13 +91,13 @@ export default function HomePage(props) {
         </button>
 
         {/* FILE UPLOAD */}
-        <p className='text-base'>Or <label className='text-blue-400 cursor-pointer hover:text-blue-800 duration-200'>upload <input className='hidden' type='file' accept='.mp3,.wave' onChange={(e) => {
+        <p className='text-base'>Or <label className='text-blue-600 cursor-pointer hover:text-blue-800 duration-200'>upload <input className='hidden' type='file' accept='.mp3,.wave' onChange={(e) => {
             const tempFile = e.target.files[0]
             setFile(tempFile)
         }}/></label>a mp3 file</p>
 
         
-        <p className='italic text-slate-400'>Free now free forever</p>
+        {/* <p className='italic text-slate-400'>Free now free forever</p> */}
     </main>
   )
 }
